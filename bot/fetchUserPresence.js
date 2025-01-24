@@ -1,7 +1,7 @@
 const activityTypeMap = {
     0: "Playing",
     1: "Streaming",
-    2: "Listening",
+    2: "Listening to",
     3: "Watching",
     4: "Status:", // custom
   };
