@@ -1,6 +1,11 @@
 const express = require("express");
 const fetchUserPresence = require("../bot/fetchUserPresence");
 const client = require("../bot/bot");
+const cors = require("cors");
+
+const allowedOrigins = ["http://localhost:5503", "https://hydrovolter.pages.dev/", "https://hydrovolter.vercel.app/"]; // Add your frontend origin here
+app.use(cors({ origin: allowedOrigins }));
+
 
 const app = express();
 const port = process.env.PORT || 3000;
