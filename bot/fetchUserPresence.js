@@ -4,6 +4,7 @@ const activityTypeMap = {
     2: "Listening to",
     3: "Watching",
     4: "Status:", // custom
+    5: "Competing in",
   };
   
   // Function to fetch and return a specific user's presence data
