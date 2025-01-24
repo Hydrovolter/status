@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 app.get("/api/presence", async (req, res) => {
   const userId = process.env.USER_ID; // Fetch user ID from environment
   const presence = await fetchUserPresence(client, userId);
-
+  console.log(presence)
   if (presence.error) {
     return res.status(500).json({ error: presence.error });
   }
