@@ -1,5 +1,10 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const { fetchUserPresence } = require("./fetchUserPresence");
+const cors = require("cors");
+
+const allowedOrigins = ["http://localhost:5503", "https://hydrovolter.pages.dev/", "https://hydrovolter.vercel.app/"]; // Add your frontend origin here
+app.use(cors({ origin: allowedOrigins }));
+
 
 // Create a new client instance
 const client = new Client({
