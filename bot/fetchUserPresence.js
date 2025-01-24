@@ -12,10 +12,10 @@ const activityTypeMap = {
       const guild = client.guilds.cache.first(); // Get the first available guild
       if (!guild) {
         return {
-          status: "unknown",
-          activityType: "None",
-          activityText: "No activity",
-          activityDetails: "No details",
+          status: "",
+          activityType: "",
+          activityText: "",
+          activityDetails: "",
           activityImage: "",
           error: "No guilds available for the bot.",
         };
@@ -24,10 +24,10 @@ const activityTypeMap = {
       const member = await guild.members.fetch(userId);
       if (!member) {
         return {
-          status: "unknown",
-          activityType: "None",
-          activityText: "No activity",
-          activityDetails: "No details",
+          status: "",
+          activityType: "",
+          activityText: "",
+          activityDetails: "",
           activityImage: "",
           error: "User not found in the guild.",
         };
@@ -38,9 +38,9 @@ const activityTypeMap = {
       // Default response structure
       const response = {
         status: "offline",
-        activityType: "None",
-        activityText: "No activity",
-        activityDetails: "No details",
+        activityType: "",
+        activityText: "",
+        activityDetails: "",
         activityImage: "",
       };
   
@@ -52,9 +52,9 @@ const activityTypeMap = {
         const activity = presence.activities[0]; // Only fetch the first activity
         if (activity) {
           response.activityType =
-            activityTypeMap[activity.type] || "Unknown";
-          response.activityText = activity.state || "No description";
-          response.activityDetails = activity.details || "No details";
+            activityTypeMap[activity.type] || "";
+          response.activityText = activity.state || "";
+          response.activityDetails = activity.details || "";
           response.activityImage =
             activity.assets?.largeImageURL() || "";
         }
@@ -67,10 +67,10 @@ const activityTypeMap = {
     } catch (error) {
       console.error("Error fetching user presence:", error);
       return {
-        status: "unknown",
-        activityType: "None",
-        activityText: "No activity",
-        activityDetails: "No details",
+        status: "",
+        activityType: "",
+        activityText: "",
+        activityDetails: "",
         activityImage: "",
         error: "Failed to retrieve presence data.",
       };
