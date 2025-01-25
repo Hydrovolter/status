@@ -23,6 +23,10 @@ app.get("/api/presence", async (req, res) => {
   res.json(presence);
 });
 
+app.get("/keep-alive", (req, res) => {
+  res.status(200).send("OK");
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`API server is running on port ${port}`);

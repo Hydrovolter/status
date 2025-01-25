@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits } = require("discord.js");
+const keepAlive = require("./keepAlive");
 
 const client = new Client({
   intents: [
@@ -14,5 +15,7 @@ client.once("ready", () => {
 });
 
 client.login(process.env.DISCORD_TOKEN);
+
+setInterval(keepAlive, 1800000); // Adjust the interval (in milliseconds) as needed
 
 module.exports = client;
