@@ -3,7 +3,16 @@ const fetchUserPresence = require("../bot/fetchUserPresence");
 const client = require("../bot/bot");
 const cors = require("cors");
 
-
+let vscodeJson = {
+  "workspace":"",
+  "fileName":"",
+  "language":"",
+  "line":0,
+  "column":0,
+  "startTime":0,
+  "elapsedTime":0
+}
+let resetTimer;
 
 
 const app = express();
@@ -27,15 +36,7 @@ const allowedOrigins = [
 
 app.use(cors({ origin: allowedOrigins }));
 
-let vscodeJson = {
-  "workspace":"",
-  "fileName":"",
-  "language":"",
-  "line":0,
-  "column":0,
-  "startTime":0,
-  "elapsedTime":0
-}
+
 
 // Route to get presence data
 app.get("/api/discord", async (req, res) => {
@@ -47,6 +48,18 @@ app.get("/api/discord", async (req, res) => {
 
   res.json(presence);
 });
+
+function resetVscodeJson() {
+  vscodeJson = {
+    "workspace":"",
+    "fileName":"",
+    "language":"",
+    "line":0,
+    "column":0,
+    "startTime":0,
+    "elapsedTime":0
+  }
+}
 
 // VSCode presence endpoint
 app.options("/api/vscode", (req, res) => {
@@ -72,6 +85,11 @@ app.post("/api/vscode", (req, res) => {
   }
 
   vscodeJson = req.body;
+
+  // Reset the inactivity timer
+  clearTimeout(resetTimer);
+  resetTimer = setTimeout(resetVscodeJson, 14000); // 15s
+
   res.set("Access-Control-Allow-Origin", origin);
   return res.status(200).send("Data stored successfully");
 });
