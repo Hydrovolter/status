@@ -31,7 +31,11 @@ const allowedOrigins = [
   "https://hydrovolter.github.io",
   "http://hydrovolter.github.io",
   "https://hydrovolter.netlify.app",
-  "http://hydrovolter.netlify.app"
+  "http://hydrovolter.netlify.app",
+  "https://hydrovolter.web.app",
+  "http://hydrovolter.web.app",
+  "https://hydrovolter.firebaseapp.com",
+  "http://hydrovolter.firebaseapp.com"
 ];
 
 app.use(cors({ origin: allowedOrigins }));
