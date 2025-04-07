@@ -66,11 +66,10 @@ app.options("/api/vscode", (req, res) => {
 
 app.post("/api/vscode", (req, res) => {
   const origin = req.headers.origin;
-  /*
-  if (!allowedOrigins.includes(origin)) {
-    return res.status(403).send("Origin Not Allowed");
+  const apiKey = req.headers["x-api-key"];
+  if (apiKey !== process.env.SECRET_API_KEY) {
+    return res.status(403).send("Forbidden: Invalid API Key");
   }
-  */
 
   vscodeJson = req.body;
   res.set("Access-Control-Allow-Origin", origin);
