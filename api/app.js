@@ -9,6 +9,8 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.json());
+
 const allowedOrigins = [
   "http://localhost:5503",
   "https://hydrovolter.pages.dev",
@@ -25,8 +27,10 @@ const allowedOrigins = [
 
 app.use(cors({ origin: allowedOrigins }));
 
+let vscodeJson = {};
+
 // Route to get presence data
-app.get("/api/presence", async (req, res) => {
+app.get("/api/discord", async (req, res) => {
   const userId = process.env.USER_ID; // Fetch user ID from environment
   const presence = await fetchUserPresence(client, userId);
   if (presence.error) {
@@ -34,6 +38,42 @@ app.get("/api/presence", async (req, res) => {
   }
 
   res.json(presence);
+});
+
+// VSCode presence endpoint
+app.options("/api/vscode", (req, res) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.set({
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Max-Age": "86400"
+    });
+    return res.sendStatus(204);
+  } else {
+    return res.status(403).send("Origin Not Allowed");
+  }
+});
+
+app.post("/api/vscode", (req, res) => {
+  const origin = req.headers.origin;
+  if (!allowedOrigins.includes(origin)) {
+    return res.status(403).send("Origin Not Allowed");
+  }
+
+  vscodeJson = req.body;
+  res.set("Access-Control-Allow-Origin", origin);
+  return res.status(200).send("Data stored successfully");
+});
+
+app.get("/api/vscode", (req, res) => {
+  const origin = req.headers.origin;
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Content-Type": "application/json"
+  });
+  return res.status(200).json(vscodeJson);
 });
 
 app.get("/keep-alive", (req, res) => {
