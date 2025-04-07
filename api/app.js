@@ -11,11 +11,11 @@ const port = process.env.PORT || 3000;
 
 const allowedOrigins = [
   "http://localhost:5503",
-  "https://hydrovolter.pages.dev/",
+  "https://hydrovolter.pages.dev",
   "http://hydrovolter.pages.dev",
-  "https://hydrovolter.vercel.app/",
+  "https://hydrovolter.vercel.app",
   "http://hydrovolter.vercel.app",
-  "https://hydrovolter.com/",
+  "https://hydrovolter.com",
   "http://hydrovolter.com",
   "https://hydrovolter.github.io",
   "http://hydrovolter.github.io",
