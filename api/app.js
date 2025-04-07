@@ -27,7 +27,15 @@ const allowedOrigins = [
 
 app.use(cors({ origin: allowedOrigins }));
 
-let vscodeJson = {};
+let vscodeJson = {
+  "workspace":"",
+  "fileName":"",
+  "language":"",
+  "line":0,
+  "column":0,
+  "startTime":0,
+  "elapsedTime":0
+}
 
 // Route to get presence data
 app.get("/api/discord", async (req, res) => {
@@ -58,9 +66,11 @@ app.options("/api/vscode", (req, res) => {
 
 app.post("/api/vscode", (req, res) => {
   const origin = req.headers.origin;
+  /*
   if (!allowedOrigins.includes(origin)) {
     return res.status(403).send("Origin Not Allowed");
   }
+  */
 
   vscodeJson = req.body;
   res.set("Access-Control-Allow-Origin", origin);
