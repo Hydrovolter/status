@@ -1,6 +1,8 @@
 {
-  "name": "express-api",
+  "name": "status-api",
   "version": "1.0.0",
+  "description": "API Server for fetching presence/status of different apps",
+  "author": { "name": "Hydrovolter", "url": "https://hydrovolter.com"},
   "main": "api.js",
   "scripts": {
     "start": "node api.js"
