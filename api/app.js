@@ -2,6 +2,8 @@ const express = require("express");
 const fetchUserPresence = require("../bot/fetchUserPresence");
 const client = require("../bot/bot");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
 
 let vscodeJson = {
   "workspace":"",

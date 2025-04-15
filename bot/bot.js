@@ -1,5 +1,7 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const keepAlive = require("./keepAlive");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const client = new Client({
   intents: [
