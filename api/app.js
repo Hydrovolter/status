@@ -5,6 +5,11 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const { createBot } = require('../bot/mc');
+
+
+
+
 let vscodeJson = {
   "workspace":"",
   "fileName":"",
@@ -117,3 +122,5 @@ app.get("/keep-alive", (req, res) => {
 app.listen(port, () => {
   console.log(`API server is running on port ${port}`);
 });
+
+createBot();
