@@ -1,5 +1,7 @@
 const { Client, GatewayIntentBits } = require("discord.js");
 const keepAlive = require("./keepAlive");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const client = new Client({
   intents: [
@@ -11,7 +13,7 @@ const client = new Client({
 
 // Login to Discord
 client.once("ready", () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`\x1b[34m[DISCORD BOT] Logged in as ${client.user.tag}!\x1b[0m`);
 });
 
 client.login(process.env.DISCORD_TOKEN);

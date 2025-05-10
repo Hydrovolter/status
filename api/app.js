@@ -2,6 +2,13 @@ const express = require("express");
 const fetchUserPresence = require("../bot/fetchUserPresence");
 const client = require("../bot/bot");
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
+
+const { createBot } = require('../bot/mc');
+
+
+
 
 let vscodeJson = {
   "workspace":"",
@@ -117,3 +124,5 @@ app.get("/keep-alive", (req, res) => {
 app.listen(port, () => {
   console.log(`API server is running on port ${port}`);
 });
+
+createBot();

@@ -68,8 +68,8 @@ async function fetchUserPresence(client, userId) {
           activityImage: activity.assets?.largeImageURL() || "",
           activityTimestamps: activity.timestamps
             ? {
-                start: activity.timestamps.start ? new Date(activity.timestamps.start).getTime() : null,
-                end: activity.timestamps.end ? new Date(activity.timestamps.end).getTime() : null,
+                start: activity.timestamps.start || null,
+                end: activity.timestamps.end || null,
               }
             : null,
           activityEmoji: emojiUrl,

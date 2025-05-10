@@ -1,6 +1,8 @@
 {
-    "name": "discord-bot",
+    "name": "status-api-bot",
     "version": "1.0.0",
+    "description": "API Server (bot) for fetching presence/status of different apps",
+    "author": { "name": "Hydrovolter", "url": "https://hydrovolter.com"},
     "main": "bot.js",
     "scripts": {
       "start": "node bot.js"

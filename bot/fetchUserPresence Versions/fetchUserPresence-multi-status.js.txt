@@ -7,12 +7,6 @@ const activityTypeMap = {
   5: "Competing in",
 };
 
-// Helper to convert unicode emoji to CDN URL (cdnjs Twemoji)
-function getTwemojiUrl(unicodeEmoji) {
-  const codePoints = Array.from(unicodeEmoji).map(char => char.codePointAt(0).toString(16));
-  return `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/${codePoints.join('-')}.png`;
-}
-
 // Function to fetch and return a specific user's presence data
 async function fetchUserPresence(client, userId) {
   try {
@@ -48,31 +42,11 @@ async function fetchUserPresence(client, userId) {
 
       // Loop through all activities
       for (const activity of presence.activities) {
-        let emojiUrl = null;
-
-        if (activity.type === 4 && activity.emoji) {
-          if (activity.emoji.id) {
-            // Custom emoji
-            const format = activity.emoji.animated ? "gif" : "png";
-            emojiUrl = `https://cdn.discordapp.com/emojis/${activity.emoji.id}.${format}`;
-          } else if (activity.emoji.name) {
-            // Unicode emoji
-            emojiUrl = getTwemojiUrl(activity.emoji.name);
-          }
-        }
-
         response.activities.push({
           activityType: activityTypeMap[activity.type] || "",
           activityText: activity.state || "",
           activityDetails: activity.details || "",
           activityImage: activity.assets?.largeImageURL() || "",
-          activityTimestamps: activity.timestamps
-            ? {
-                start: activity.timestamps.start ? new Date(activity.timestamps.start).getTime() : null,
-                end: activity.timestamps.end ? new Date(activity.timestamps.end).getTime() : null,
-              }
-            : null,
-          activityEmoji: emojiUrl,
         });
       }
     } else {

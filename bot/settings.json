@@ -1,0 +1,49 @@
+{
+    "bot-account": {
+      "username": "24-7-BOT", 
+      "password": "",
+      "type": "mojang"
+    },
+  
+    "server": {
+      "ip": "hydrovolter.aternos.me", 
+      "port": 39790,   
+      "version": "1.8.8"   
+    },
+    
+    "position": {
+      "enabled": true,
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+  
+    "utils": {
+      "auto-auth": {
+        "enabled": false,
+        "password": ""
+      },
+  
+      "anti-afk": {
+        "enabled": true,
+        "sneak": true
+      },
+  
+      "chat-messages": {
+        "enabled": true,
+        "repeat": true,
+        "repeat-delay": 60,
+  
+        "messages": [
+          "[INFO] 24-7-BOT keeps the server alive!",
+          "[INFO] hydrovolter.com is the best site!",
+          "[INFO] Let me know if the server goes down!"
+        ]
+      },
+  
+      "chat-log": true,
+      "auto-reconnect": true,
+      "auto-recconect-delay": 5000
+    }
+  }
+  
