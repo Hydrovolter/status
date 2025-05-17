@@ -1,5 +1,6 @@
 const express = require("express");
 const fetchUserPresence = require("../bot/fetchUserPresence");
+const { fetchAnalytics } = require("./fetchAnalytics");
 const client = require("../bot/bot");
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -62,6 +63,16 @@ app.get("/api/discord", async (req, res) => {
   res.json(presence);
 });
 
+app.get("/api/analytics", async (req, res) => {
+  const analytics = await fetchAnalytics();
+
+  if (analytics.error) {
+    return res.status(500).json({ error: analytics.error });
+  }
+
+  res.json(analytics);
+});
+
 function resetVscodeJson() {
   vscodeJson = {
     "workspace":"",
@@ -73,6 +84,7 @@ function resetVscodeJson() {
     "elapsedTime":0
   }
 }
+
 
 // VSCode presence endpoint
 app.options("/api/vscode", (req, res) => {
@@ -125,4 +137,6 @@ app.listen(port, () => {
   console.log(`API server is running on port ${port}`);
 });
 
-createBot();
+// MC Bot
+
+// createBot();
