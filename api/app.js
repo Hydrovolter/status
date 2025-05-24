@@ -139,4 +139,4 @@ app.listen(port, () => {
 
 // MC Bot
 
-// createBot();
+ createBot();
