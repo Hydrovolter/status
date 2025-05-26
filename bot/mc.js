@@ -18,9 +18,12 @@ app.listen(8000, () => {
   console.log('Server started');
 });
 */
+
+const newUsername = `${config['bot-account'].username}-${Array.from({length: 3}, () => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'[Math.floor(Math.random() * 52)]).join('')}`;
+
 function createBot() {
    const bot = mineflayer.createBot({
-      username: config['bot-account']['username'],
+      username: newUsername, // config['bot-account']['username'],
       password: config['bot-account']['password'],
       auth: config['bot-account']['type'],
       host: config.server.ip,
