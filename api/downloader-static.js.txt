@@ -1,0 +1,63 @@
+const axios = require('axios');
+const cheerio = require('cheerio');
+const archiver = require('archiver');
+const path = require('path');
+const { URL } = require('url');
+
+async function downloadSite(targetUrl) {
+    const archive = archiver('zip', { zlib: { level: 9 } });
+    const downloadedAssets = new Set();
+    const siteUrl = new URL(targetUrl);
+
+    // 1. Fetch main HTML
+    let response;
+    try {
+        response = await axios.get(targetUrl, { responseType: 'text' });
+    } catch (e) {
+        console.error(`Failed to fetch main page: ${targetUrl}`);
+        throw new Error(`Could not fetch the initial URL. The site may be down or blocking requests.`);
+    }
+
+    const $ = cheerio.load(response.data);
+    archive.append(response.data, { name: 'index.html' });
+    downloadedAssets.add(siteUrl.href);
+
+    // 2. Find and download all assets (CSS, JS, images)
+    const assetPromises = [];
+    
+    // Find CSS, JS, and image assets
+    $('link[rel="stylesheet"], script[src], img[src]').each((i, element) => {
+        const el = $(element);
+        const assetAttr = el.is('link') ? 'href' : 'src';
+        let assetUrl = el.attr(assetAttr);
+        if (!assetUrl) return;
+
+        // Resolve relative URLs to absolute URLs
+        const absoluteUrl = new URL(assetUrl, siteUrl.href).href;
+
+        if (downloadedAssets.has(absoluteUrl)) return;
+        downloadedAssets.add(absoluteUrl);
+        
+        // Create a clean path for the file in the zip
+        const assetPath = new URL(absoluteUrl).pathname;
+        const finalPath = assetPath.startsWith('/') ? assetPath.substring(1) : assetPath;
+
+        const promise = axios.get(absoluteUrl, { responseType: 'arraybuffer' })
+            .then(res => {
+                archive.append(res.data, { name: finalPath });
+                console.log(`Added asset: ${finalPath}`);
+            })
+            .catch(err => {
+                console.warn(`Could not download asset: ${absoluteUrl} - ${err.message}`);
+            });
+
+        assetPromises.push(promise);
+    });
+
+    await Promise.all(assetPromises);
+    
+    archive.finalize();
+    return archive; // Return the archive stream
+}
+
+module.exports = { downloadSite };
