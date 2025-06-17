@@ -6,6 +6,7 @@ set -o errexit
 npm install
 
 # Install Google Chrome dependencies for Puppeteer
+# Added libgbm1 to the list
 apt-get update && apt-get install -y \
     ca-certificates \
     fonts-liberation \
@@ -42,4 +43,5 @@ apt-get update && apt-get install -y \
     libxtst6 \
     lsb-release \
     wget \
-    xdg-utils
+    xdg-utils \
+    libgbm1
